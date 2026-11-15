@@ -1,0 +1,144 @@
+/* =============================================================
+   style.css  —  Custom styles for Task List app
+   Tailwind handles the bulk of styling; this file covers:
+   • Filter tab active state (dynamic class toggled by JS)
+   • Task item enter / exit animations
+   • Edit-mode input inside task cards
+   • Smooth checkbox transition
+   • Scrollbar polish (optional)
+   ============================================================= */
+
+/* ----------------------------------------------------------------
+   FILTER TABS
+   .active-filter is toggled by JS onto the selected button
+   ---------------------------------------------------------------- */
+.filter-btn {
+  color: #64748b; /* text-slate-500 */
+}
+
+.filter-btn:hover {
+  background-color: #f1f5f9; /* slate-100 */
+  color: #1e293b;
+}
+
+.active-filter {
+  background-color: #2563EB; /* primary */
+  color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------------
+   TASK ITEM ANIMATION
+   JS adds / removes these classes to animate list changes
+   ---------------------------------------------------------------- */
+.task-item {
+  animation: taskEnter 0.22s ease both;
+}
+
+@keyframes taskEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-item.removing {
+  animation: taskExit 0.2s ease forwards;
+}
+
+@keyframes taskExit {
+  to {
+    opacity: 0;
+    transform: translateX(16px);
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* ----------------------------------------------------------------
+   COMPLETED TASK  — strikethrough text
+   ---------------------------------------------------------------- */
+.task-text.completed {
+  text-decoration: line-through;
+  color: #94a3b8; /* slate-400 */
+}
+
+/* ----------------------------------------------------------------
+   CUSTOM CHECKBOX
+   We hide the native checkbox and style a visual proxy
+   ---------------------------------------------------------------- */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;   /* 18px */
+  height: 1.125rem;
+  border: 2px solid #CBD5E1; /* slate-300 */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.custom-checkbox:checked {
+  background-color: #22c55e; /* green-500 */
+  border-color: #22c55e;
+}
+
+/* Checkmark via pseudo-element */
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------
+   INLINE EDIT INPUT  (replaces task text while editing)
+   ---------------------------------------------------------------- */
+.edit-input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #2563EB;
+  background: transparent;
+  font-size: 0.875rem; /* text-sm */
+  color: #1e293b;
+  outline: none;
+  padding: 0 2px;
+  line-height: 1.5;
+}
+
+/* ----------------------------------------------------------------
+   SCROLLBAR  (subtle, Webkit-based)
+   ---------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
